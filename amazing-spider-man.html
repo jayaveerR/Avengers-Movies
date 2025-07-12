@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animated Iframe</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #121212;
+            margin: 0;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+            max-width: 100vw;
+        }
+
+        .iframe-container {
+            position: relative;
+            width: 80%;
+            max-width: 800px;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        iframe {
+            width: 100%;
+            aspect-ratio: 16 / 9; /* Maintains responsive height */
+            border: none;
+            display: block;
+            cursor: pointer;
+        }
+
+        /* Overlay to block pop-out icon */
+        .overlay {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60px;  /* Adjust width to cover pop-out */
+            height: 40px; /* Adjust height to cover pop-out */
+            background: transparent;
+            z-index: 2;
+        }
+
+        /* Animated Border */
+        .border-animation {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            box-shadow: 0 0 10px 5px rgba(0, 255, 255, 0.5);
+            animation: glow 2s infinite alternate;
+            pointer-events: none;
+            border-radius: 10px;
+        }
+
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 5px 3px rgba(0, 255, 255, 0.5);
+            }
+            100% {
+                box-shadow: 0 0 15px 8px rgba(0, 255, 255, 1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .iframe-container {
+                width: 90%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .iframe-container {
+                width: 95%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="iframe-container">
+        <div class="border-animation"></div>
+        <iframe id="videoFrame"
+          src="https://drive.google.com/file/d/1PfN9QabX8J89GUlsujmAsqBKzYv9u5Cf/preview" 
+            allow="autoplay; fullscreen; encrypted-media">
+        </iframe>
+        <div class="overlay"></div> <!-- Invisible div to block pop-out -->
+    </div>
+
+    <script>
+        // Enable Full-Screen on Click
+        document.getElementById("videoFrame").addEventListener("click", function () {
+            if (this.requestFullscreen) {
+                this.requestFullscreen();
+            } else if (this.mozRequestFullScreen) { // Firefox
+                this.mozRequestFullScreen();
+            } else if (this.webkitRequestFullscreen) { // Chrome, Safari, Opera
+                this.webkitRequestFullscreen();
+            } else if (this.msRequestFullscreen) { // IE/Edge
+                this.msRequestFullscreen();
+            }
+        });
+    </script>
+
+</body>
+</html>
